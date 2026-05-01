@@ -85,7 +85,7 @@ export async function createTour(formData: FormData) {
     .select()
     .single();
 
-  if (error) throw new Error(error.message);
+  if (error || !tour) throw new Error(error?.message ?? "Failed to create tour");
   revalidatePath("/tours");
   redirect(`/tours/${tour.id}`);
 }
@@ -139,6 +139,8 @@ export async function updateTour(id: string, formData: FormData) {
       status: data.status as TourStatus,
     })
     .eq("id", id);
+
+  redirect("/tours");
 
   if (error) throw new Error(error.message);
   revalidatePath("/tours");
