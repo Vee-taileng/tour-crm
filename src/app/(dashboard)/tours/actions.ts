@@ -85,7 +85,7 @@ export async function createTour(formData: FormData) {
     .select()
     .single();
 
-  if (error) throw new Error(error.message);
+  if (error || !tour) throw new Error(error?.message ?? "Failed to create tour");
   revalidatePath("/tours");
   redirect(`/tours/${tour.id}`);
 }

@@ -15,6 +15,7 @@ import {
   LogOut,
   Navigation,
   BarChart2,
+  PieChart,
   X,
 } from "lucide-react";
 
@@ -27,6 +28,7 @@ const navItems = [
   { href: "/transfers", label: "Transfers", icon: ArrowLeftRight },
   { href: "/locations", label: "Pickup Locations", icon: Navigation },
   { href: "/reports", label: "Reports", icon: BarChart2 },
+  { href: "/analytics", label: "Analytics", icon: PieChart },
 ];
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
