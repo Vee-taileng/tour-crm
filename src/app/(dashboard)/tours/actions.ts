@@ -140,8 +140,6 @@ export async function updateTour(id: string, formData: FormData) {
     })
     .eq("id", id);
 
-  redirect("/tours");
-
   if (error) throw new Error(error.message);
   revalidatePath("/tours");
   revalidatePath(`/tours/${id}`);
