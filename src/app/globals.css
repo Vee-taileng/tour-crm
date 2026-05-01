@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:is(.dark *));
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ── Color themes ────────────────────────────────────────────────────────────
+   Remap the orange palette to the chosen accent. Every Tailwind utility that
+   references --color-orange-* (bg-orange-600, text-orange-500, ring-orange-500
+   focus rings, etc.) automatically picks up the new value — zero component
+   changes needed. The attribute is written to <html> by the init script in
+   layout.tsx before first paint, so there is no colour flash.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+[data-color="sky"] {
+  --color-orange-50:  var(--color-sky-50);
+  --color-orange-100: var(--color-sky-100);
+  --color-orange-500: var(--color-sky-500);
+  --color-orange-600: var(--color-sky-600);
+  --color-orange-700: var(--color-sky-700);
+}
+
+[data-color="emerald"] {
+  --color-orange-50:  var(--color-emerald-50);
+  --color-orange-100: var(--color-emerald-100);
+  --color-orange-500: var(--color-emerald-500);
+  --color-orange-600: var(--color-emerald-600);
+  --color-orange-700: var(--color-emerald-700);
+}
+
+[data-color="violet"] {
+  --color-orange-50:  var(--color-violet-50);
+  --color-orange-100: var(--color-violet-100);
+  --color-orange-500: var(--color-violet-500);
+  --color-orange-600: var(--color-violet-600);
+  --color-orange-700: var(--color-violet-700);
+}
+
+[data-color="rose"] {
+  --color-orange-50:  var(--color-rose-50);
+  --color-orange-100: var(--color-rose-100);
+  --color-orange-500: var(--color-rose-500);
+  --color-orange-600: var(--color-rose-600);
+  --color-orange-700: var(--color-rose-700);
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────────
+   Overrides flip the Tailwind utility classes used throughout the app without
+   requiring dark: variants on every component.
+   Specificity: .dark .utility (0,1,1) beats .utility (0,0,1) — no !important.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.dark {
+  color-scheme: dark;
+}
+
+/* Backgrounds */
+.dark .bg-white    { background-color: #1e293b; }
+.dark .bg-gray-50  { background-color: #0f172a; }
+.dark .bg-gray-100 { background-color: #1e293b; }
+.dark .bg-gray-200 { background-color: #334155; }
+
+/* Borders */
+.dark .border-gray-100 { border-color: #334155; }
+.dark .border-gray-200 { border-color: #334155; }
+.dark .border-gray-300 { border-color: #475569; }
+
+/* Dividers */
+.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: #334155; }
+.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: #334155; }
+
+/* Text */
+.dark .text-gray-900 { color: #f1f5f9; }
+.dark .text-gray-800 { color: #e2e8f0; }
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-gray-600 { color: #94a3b8; }
+
+/* Hover rows */
+.dark .hover\:bg-gray-50:hover  { background-color: #1e293b; }
+.dark .hover\:bg-gray-100:hover { background-color: #273549; }
+
+/* Badge / status chip backgrounds — theme-aware via color-mix */
+.dark .bg-orange-100 { background-color: color-mix(in oklch, var(--color-orange-100) 30%, transparent); }
+.dark .bg-green-100  { background-color: color-mix(in oklch, var(--color-green-100)  30%, transparent); }
+.dark .bg-red-100    { background-color: color-mix(in oklch, var(--color-red-100)    30%, transparent); }
+.dark .bg-yellow-100 { background-color: color-mix(in oklch, var(--color-yellow-100) 30%, transparent); }
+.dark .bg-amber-100  { background-color: color-mix(in oklch, var(--color-amber-100)  30%, transparent); }
+.dark .bg-blue-100   { background-color: color-mix(in oklch, var(--color-blue-100)   30%, transparent); }
+
+/* Input placeholder */
+.dark ::placeholder { color: #64748b; }
