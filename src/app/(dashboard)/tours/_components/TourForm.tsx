@@ -76,6 +76,7 @@ export default function TourForm({ providers, tour }: Props) {
     setList: (l: string[]) => void,
     value: string,
     setValue: (v: string) => void
+    
   ) {
     if (!value.trim()) return;
     setList([...list, value.trim()]);

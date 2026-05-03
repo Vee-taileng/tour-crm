@@ -142,8 +142,7 @@ export async function updateTour(id: string, formData: FormData) {
 
   if (error) throw new Error(error.message);
   revalidatePath("/tours");
-  revalidatePath(`/tours/${id}`);
-  redirect(`/tours/${id}`);
+  redirect("/tours");
 }
 
 export async function deleteTour(id: string) {

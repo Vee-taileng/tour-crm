@@ -80,8 +80,7 @@ export async function updateProvider(id: string, formData: FormData) {
 
   if (error) throw new Error(error.message);
   revalidatePath("/providers");
-  revalidatePath(`/providers/${id}`);
-  redirect(`/providers/${id}`);
+  redirect("/providers");
 }
 
 export async function addBankAccount(providerId: string, formData: FormData) {
@@ -128,4 +127,13 @@ export async function setPrimaryBank(bankId: string, providerId: string) {
     .eq("providerId", providerId);
   await supabase.from("banks").update({ isPrimary: true }).eq("id", bankId);
   revalidatePath(`/providers/${providerId}`);
+}
+
+export async function deleteProvider(id: string) {
+  const supabase = await createClient();
+  await supabase.from("banks").delete().eq("providerId", id);
+  const { error } = await supabase.from("tour_providers").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/providers");
+  redirect("/providers");
 }

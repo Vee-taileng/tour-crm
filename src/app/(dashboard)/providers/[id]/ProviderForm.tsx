@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { updateProvider } from "../actions";
 import type { TourProvider } from "@/types/database";
 
@@ -88,12 +89,20 @@ export default function ProviderForm({ provider }: { provider: TourProvider }) {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
-      >
-        Save Changes
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          className="bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
+        >
+          Save Changes
+        </button>
+        <Link
+          href="/providers"
+          className="px-5 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          Cancel
+        </Link>
+      </div>
     </form>
   );
 }
