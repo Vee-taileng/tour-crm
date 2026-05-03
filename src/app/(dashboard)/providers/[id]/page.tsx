@@ -1,11 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, Star } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import PageHeader from "@/components/ui/PageHeader";
 import Badge from "@/components/ui/Badge";
 import ProviderForm from "./ProviderForm";
 import BankAccountsSection from "./BankAccountsSection";
+import DeleteProviderButton from "./DeleteProviderButton";
 
 export default async function ProviderDetailPage({
   params,
@@ -32,15 +33,17 @@ export default async function ProviderDetailPage({
         Providers
       </Link>
 
-      <PageHeader
-        title={provider.name}
-        className="mb-6"
-        action={
-          <Badge variant={provider.isActive ? "green" : "gray"}>
-            {provider.isActive ? "Active" : "Inactive"}
-          </Badge>
-        }
-      />
+      <div className="flex items-start justify-between mb-6">
+        <PageHeader
+          title={provider.name}
+          action={
+            <Badge variant={provider.isActive ? "green" : "gray"}>
+              {provider.isActive ? "Active" : "Inactive"}
+            </Badge>
+          }
+        />
+        <DeleteProviderButton id={id} />
+      </div>
 
       <div className="space-y-6">
         <div className="bg-white rounded-xl border border-gray-200 p-6">
