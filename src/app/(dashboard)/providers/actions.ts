@@ -112,6 +112,34 @@ export async function addBankAccount(providerId: string, formData: FormData) {
   revalidatePath(`/providers/${providerId}`);
 }
 
+export async function updateBankAccount(bankId: string, providerId: string, formData: FormData) {
+  const supabase = await createClient();
+  const raw = {
+    bankName: formData.get("bankName") as string,
+    accountName: formData.get("accountName") as string,
+    accountNo: formData.get("accountNo") as string,
+    isPrimary: formData.get("isPrimary") === "true",
+  };
+  const data = bankSchema.parse(raw);
+
+  if (data.isPrimary) {
+    await supabase.from("banks").update({ isPrimary: false }).eq("providerId", providerId);
+  }
+
+  const { error } = await supabase
+    .from("banks")
+    .update({
+      bankName: data.bankName,
+      accountName: data.accountName,
+      accountNo: data.accountNo,
+      isPrimary: data.isPrimary,
+    })
+    .eq("id", bankId);
+
+  if (error) throw new Error(error.message);
+  revalidatePath(`/providers/${providerId}`);
+}
+
 export async function deleteBankAccount(bankId: string, providerId: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("banks").delete().eq("id", bankId);
